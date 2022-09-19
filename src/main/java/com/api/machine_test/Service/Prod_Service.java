@@ -41,7 +41,6 @@ public class Prod_Service {
             con.close();
              stmnt.close();
 
-
         }
         return a;
     }
