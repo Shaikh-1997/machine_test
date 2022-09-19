@@ -6,7 +6,7 @@ import com.api.machine_test.model.Products_Model;
 import java.sql.*;
 
 public class Prod_Service {
-    public boolean checklCategories(Categories_Model categories_model, Products_Model products_model) {
+    public boolean checklCategories(Categories_Model categories_model, Products_Model products_model) throws SQLException {
        boolean a=true;
        int check_id= products_model.getCategory_id();
         Connection con = null;
@@ -35,6 +35,13 @@ public class Prod_Service {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+        finally {
+
+            con.close();
+             stmnt.close();
+
+
         }
         return a;
     }
