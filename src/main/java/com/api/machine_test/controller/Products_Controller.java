@@ -1,5 +1,6 @@
 package com.api.machine_test.controller;
 
+import com.api.machine_test.Service.Prod_Service;
 import com.api.machine_test.Service.Products_Paging_Service;
 import com.api.machine_test.Service.Products_Paging_Service_Impl;
 import com.api.machine_test.exception.ResourceNotFound;
@@ -26,6 +27,8 @@ public class Products_Controller {
     Products_Paging_Service products_paging_service;
     @Autowired
     Products_Paging_Service_Impl products_paging_service_impl;
+    @Autowired
+    Prod_Service prod_service;
 
     @GetMapping("/products")
     public List<Products_Model> getAllProducts() {
@@ -37,12 +40,19 @@ public class Products_Controller {
         int pageSize=3;
 
         return products_paging_service
+
                 .findPaginate(pageNo, pageSize);
     }
 
     @PostMapping("/products")
-    public Products_Model addProducts(@RequestBody Products_Model products_model) {
-        return products_repository.save(products_model);
+    public String addProducts(@RequestBody Products_Model products_model, @RequestBody Categories_Model categories_model) {
+        boolean get;
+        get = prod_service.checklCategories(categories_model, products_model);
+        if (get == true) {
+            return "product Add sucessfullly";
+        } else {
+            return "Invalid Category_id";
+        }
     }
 
     @GetMapping("/products/{id}")
