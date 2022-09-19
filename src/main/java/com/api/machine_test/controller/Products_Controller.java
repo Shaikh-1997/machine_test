@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RestController
@@ -45,7 +46,7 @@ public class Products_Controller {
     }
 
     @PostMapping("/products")
-    public String addProducts(@RequestBody Products_Model products_model, @RequestBody Categories_Model categories_model) {
+    public String addProducts(@RequestBody Products_Model products_model, @RequestBody Categories_Model categories_model) throws SQLException {
         boolean get;
         get = prod_service.checklCategories(categories_model, products_model);
         if (get == true) {
@@ -53,6 +54,7 @@ public class Products_Controller {
         } else {
             return "Invalid Category_id";
         }
+
     }
 
     @GetMapping("/products/{id}")
