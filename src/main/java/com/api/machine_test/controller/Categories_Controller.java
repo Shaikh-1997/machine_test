@@ -3,10 +3,13 @@ package com.api.machine_test.controller;
 
 import com.api.machine_test.Service.Paging_Service;
 import com.api.machine_test.Service.Paging_Service_Impl;
+import com.api.machine_test.dto.One_to_Many_Response;
+import com.api.machine_test.dto.Product_Req;
 import com.api.machine_test.exception.ResourceNotFound;
 import com.api.machine_test.model.Categories_Model;
 import com.api.machine_test.repository.Categories_Repo;
 import com.api.machine_test.repository.Categories_Repository;
+import com.api.machine_test.repository.Products_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +28,22 @@ private Categories_Repository categories_repository;
 @Autowired
 private Categories_Repo categories_repo;
 @Autowired
+private Products_Repository products_repository;
+@Autowired
     Paging_Service paging_service;
 
-  @GetMapping("/categories")
+@PostMapping("/categories")
+private Categories_Model add(@RequestBody Product_Req product_req){
+    return categories_repository.save(product_req.getCategories_model());
+}
+
+@GetMapping("/categories")
+private  List<One_to_Many_Response> getAssociation(){
+    return categories_repository.getAssociation();
+}
+
+
+@GetMapping("/all_categories")
   public List<Categories_Model> getAllCategories(){
       return categories_repository.findAll();
    }

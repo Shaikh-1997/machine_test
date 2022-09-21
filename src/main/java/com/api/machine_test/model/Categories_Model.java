@@ -8,6 +8,7 @@ import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -48,5 +49,10 @@ public class Categories_Model implements Serializable {
     @JsonProperty
 
     private String category_name;
+
+    @OneToMany(targetEntity = Products_Model.class, cascade = CascadeType.ALL)
+    @JoinColumn(name="cp_fk",referencedColumnName = "category_id")
+
+    private List<Products_Model> products_modelList;
 
 }

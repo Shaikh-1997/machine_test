@@ -46,15 +46,16 @@ public class Products_Controller {
     }
 
     @PostMapping("/products")
-    public String addProducts(@RequestBody Products_Model products_model, @RequestBody Categories_Model categories_model) throws SQLException {
-        boolean get;
-        get = prod_service.checklCategories(categories_model, products_model);
-        if (get == true) {
-            return "product Add sucessfullly";
-        } else {
-            return "Invalid Category_id";
+    public String addProducts(@RequestBody Products_Model products_model,@RequestBody Categories_Model categories_model) throws SQLException {
+      boolean get=  prod_service.checklCategories(categories_model,products_model);
+        if(get==true){
+            return "Product Add Successfully";
         }
+        else {
 
+
+            return "Return Invalid Category_id";
+        }
     }
 
     @GetMapping("/products/{id}")
